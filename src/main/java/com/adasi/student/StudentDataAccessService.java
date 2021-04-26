@@ -43,4 +43,15 @@ public class StudentDataAccessService {
     }
 
 
+    int insertStudent(UUID studentId, Student student) {
+        String q = " " +
+                    "INSERT INTO student (student_id, first_name, last_name, email, gender)"+
+                    "VALUES (?, ?, ?, ?, ?)";
+
+        return jdbcTemplate.update(q, studentId,
+                                        student.getFirstName(),
+                                        student.getLastName(),
+                                        student.getEmail(),
+                                        student.getGender().name().toUpperCase());
+    }
 }

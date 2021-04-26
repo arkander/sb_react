@@ -1,10 +1,9 @@
 package com.adasi.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 
@@ -22,6 +21,11 @@ public class StudentsController {
     @GetMapping()
     public List<Student> getAllStudents(){
         return  this.studentService.getAllStudents();
+    }
+
+    @PostMapping
+    public void addNewStudent(@RequestBody @Valid Student student){
+        this.studentService.addNewStudent(student);
     }
 
 
