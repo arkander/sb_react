@@ -33,6 +33,9 @@ public class StudentService {
         if(!emailValidator.test(student.getEmail())){
             throw  new ApiRequestException("O email informado não é valido");
         }
+        if(studentDataAccessService.isEmailExists(student.getEmail())){
+            throw  new ApiRequestException("O email informado não é valido");
+        }
         studentDataAccessService.insertStudent(uuid, student);
     }
 

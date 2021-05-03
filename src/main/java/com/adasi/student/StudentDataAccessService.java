@@ -1,6 +1,7 @@
 package com.adasi.student;
 
 
+import com.adasi.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,14 +45,21 @@ public class StudentDataAccessService {
 
 
     int insertStudent(UUID studentId, Student student) {
+
         String q = " " +
                     "INSERT INTO student (student_id, first_name, last_name, email, gender)"+
-                    "VALUES (?, ?, ?, ?, ?)";
+                    "VALUES (?, ?, ?, ?, ?::gender)";
 
         return jdbcTemplate.update(q, studentId,
                                         student.getFirstName(),
                                         student.getLastName(),
                                         student.getEmail(),
                                         student.getGender().name().toUpperCase());
+    }
+
+     boolean isEmailExists(String email){
+        String q= "select exists ( select 1 from student where email = ?)";
+
+        return jdbcTemplate.queryForObject(q,new Object[] {email},((resultSet, i) -> resultSet.getBoolean(1)));
     }
 }
