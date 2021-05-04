@@ -28,5 +28,11 @@ public class StudentsController {
         this.studentService.addNewStudent(student);
     }
 
+    @GetMapping(path = "{studentId}/courses")
+    public List<StudentCourse> getAllCoursesForStudent(@PathVariable("studentId") UUID studentId){
+        return this.studentService.getAllCoursesForStudent(studentId);
+    }
+
+
 
 }
